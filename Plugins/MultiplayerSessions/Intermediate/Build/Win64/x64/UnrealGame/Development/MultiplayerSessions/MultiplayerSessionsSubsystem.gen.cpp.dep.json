@@ -1,0 +1,21 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\gamedevelopment\\unrealengine\\projects\\ue5-shooter-mechanics\\plugins\\multiplayersessions\\intermediate\\build\\win64\\unrealgame\\inc\\multiplayersessions\\uht\\multiplayersessionssubsystem.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\gamedevelopment\\unrealengine\\projects\\ue5-shooter-mechanics\\intermediate\\build\\win64\\x64\\shootermechanics\\development\\engine\\sharedpch.engine.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "d:\\gamedevelopment\\unrealengine\\projects\\ue5-shooter-mechanics\\plugins\\multiplayersessions\\intermediate\\build\\win64\\x64\\unrealgame\\development\\multiplayersessions\\definitions.multiplayersessions.h",
+            "d:\\gamedevelopment\\unrealengine\\projects\\ue5-shooter-mechanics\\plugins\\multiplayersessions\\source\\multiplayersessions\\public\\multiplayersessionssubsystem.h",
+            "d:\\ue 5\\ue_5.4\\engine\\plugins\\online\\onlinesubsystem\\source\\public\\interfaces\\onlinesessioninterface.h",
+            "d:\\ue 5\\ue_5.4\\engine\\plugins\\online\\onlinesubsystem\\source\\public\\onlinesubsystemtypes.h",
+            "d:\\ue 5\\ue_5.4\\engine\\plugins\\online\\onlinesubsystem\\source\\public\\onlinesubsystemnames.h",
+            "d:\\ue 5\\ue_5.4\\engine\\plugins\\online\\onlinesubsystem\\source\\public\\onlinedelegatemacros.h",
+            "d:\\ue 5\\ue_5.4\\engine\\plugins\\online\\onlinesubsystem\\source\\public\\interfaces\\onlinesessiondelegates.h",
+            "d:\\ue 5\\ue_5.4\\engine\\plugins\\online\\onlinesubsystem\\source\\public\\onlinekeyvaluepair.h",
+            "d:\\gamedevelopment\\unrealengine\\projects\\ue5-shooter-mechanics\\plugins\\multiplayersessions\\intermediate\\build\\win64\\unrealgame\\inc\\multiplayersessions\\uht\\multiplayersessionssubsystem.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
