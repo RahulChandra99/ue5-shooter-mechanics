@@ -72,7 +72,7 @@
 "synchronization.lib"
 "dwmapi.lib"
 "imm32.lib"
-/OUT:"D:\GameDevelopment\UnrealEngine\Projects\ue5-shooter-mechanics\Plugins\MultiplayerSessions\Binaries\Win64\UnrealEditor-MultiplayerSessions.dll"
-/IMPLIB:"D:\GameDevelopment\UnrealEngine\Projects\ue5-shooter-mechanics\Plugins\MultiplayerSessions\Intermediate\Build\Win64\x64\UnrealEditor\Development\MultiplayerSessions\UnrealEditor-MultiplayerSessions.sup.lib"
-/PDB:"D:\GameDevelopment\UnrealEngine\Projects\ue5-shooter-mechanics\Plugins\MultiplayerSessions\Binaries\Win64\UnrealEditor-MultiplayerSessions.pdb"
+/OUT:"D:\GameDevelopment\UnrealEngine\Projects\ue5-shooter-mechanics\Plugins\MultiplayerSessions\Binaries\Win64\UnrealEditor-MultiplayerSessions-0001.dll"
+/IMPLIB:"D:\GameDevelopment\UnrealEngine\Projects\ue5-shooter-mechanics\Plugins\MultiplayerSessions\Intermediate\Build\Win64\x64\UnrealEditor\Development\MultiplayerSessions\UnrealEditor-MultiplayerSessions-0001.sup.lib"
+/PDB:"D:\GameDevelopment\UnrealEngine\Projects\ue5-shooter-mechanics\Plugins\MultiplayerSessions\Binaries\Win64\UnrealEditor-MultiplayerSessions-0001.pdb"
 /ignore:4078
