@@ -4,3 +4,4 @@
 #include "D:/GameDevelopment/UnrealEngine/Projects/ue5-shooter-mechanics/Plugins/MultiplayerSessions/Intermediate/Build/Win64/UnrealEditor/Inc/MultiplayerSessions/UHT/MultiplayerSessionsSubsystem.gen.cpp"
 #include "D:/GameDevelopment/UnrealEngine/Projects/ue5-shooter-mechanics/Plugins/MultiplayerSessions/Source/MultiplayerSessions/Private/Menu.cpp"
 #include "D:/GameDevelopment/UnrealEngine/Projects/ue5-shooter-mechanics/Plugins/MultiplayerSessions/Source/MultiplayerSessions/Private/MultiplayerSessions.cpp"
+#include "D:/GameDevelopment/UnrealEngine/Projects/ue5-shooter-mechanics/Plugins/MultiplayerSessions/Source/MultiplayerSessions/Private/MultiplayerSessionsSubsystem.cpp"
