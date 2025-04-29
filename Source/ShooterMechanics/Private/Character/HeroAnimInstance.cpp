@@ -33,4 +33,5 @@ void UHeroAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	bIsAccelerating = HeroCharacterRef->GetCharacterMovement()->GetCurrentAcceleration().Size() > 0.f ? true : false;
 	bIsCrouched = HeroCharacterRef->bIsCrouched;
 	bWeaponEquipped = HeroCharacterRef->IsWeaponEquipped();
+	bIsAiming = HeroCharacterRef->IsAiming();
 }

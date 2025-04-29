@@ -56,6 +56,8 @@ void AHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAction("Jump",IE_Pressed,this,&ACharacter::Jump);
 	PlayerInputComponent->BindAction("Crouch",IE_Pressed,this,&AHeroCharacter::CrouchButtonPressed);
 	PlayerInputComponent->BindAction("Equip",IE_Pressed,this,&AHeroCharacter::EquipButtonPressed);
+	PlayerInputComponent->BindAction("Aim",IE_Pressed,this,&AHeroCharacter::AimButtonPressed);
+	PlayerInputComponent->BindAction("Aim",IE_Released,this,&AHeroCharacter::AimButtonReleased);
 }
 
 void AHeroCharacter::PostInitializeComponents()
@@ -170,6 +172,8 @@ void AHeroCharacter::EquipButtonPressed()
 	}
 }
 
+
+
 void AHeroCharacter::ServerEquipButtonPressed_Implementation()
 {
 	if(Combat)
@@ -183,6 +187,27 @@ void AHeroCharacter::ServerEquipButtonPressed_Implementation()
 bool AHeroCharacter::IsWeaponEquipped()
 {
 	return (Combat && Combat->EquippedWeapon);
+}
+
+bool AHeroCharacter::IsAiming()
+{
+	return(Combat && Combat->bAiming);
+}
+
+void AHeroCharacter::AimButtonPressed()
+{
+	if(Combat)
+	{
+		Combat->SetAiming(true);
+	}
+}
+
+void AHeroCharacter::AimButtonReleased()
+{
+	if(Combat)
+	{
+		Combat->SetAiming(false);
+	}
 }
 
 

@@ -30,6 +30,8 @@ protected:
 	void CrouchButtonPressed();
 
 	void EquipButtonPressed();
+	void AimButtonPressed();
+	void AimButtonReleased();
 private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Camera", meta = (AllowPrivateAccess = true))
@@ -56,4 +58,5 @@ public:
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera;}
 	void SetOverlappingWeapon(ABaseWeapon* Weapon);
 	bool IsWeaponEquipped();
+	bool IsAiming();
 };
