@@ -5,6 +5,8 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Net/UnrealNetwork.h"
+#include "WEapon/BaseWeapon.h"
 
 AHeroCharacter::AHeroCharacter()
 {
@@ -24,9 +26,23 @@ AHeroCharacter::AHeroCharacter()
 	
 }
 
+void AHeroCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME_CONDITION(AHeroCharacter, OverlappingWeapon, COND_OwnerOnly)
+}
+
+
 void AHeroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
+}
+
+void AHeroCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
 	
 }
 
@@ -41,6 +57,8 @@ void AHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	PlayerInputComponent->BindAction("Jump",IE_Pressed,this,&ACharacter::Jump);
 }
+
+#pragma region LocomotionLogic
 
 void AHeroCharacter::MoveForward(float Value)
 {
@@ -74,11 +92,40 @@ void AHeroCharacter::LookUp(float Value)
 	AddControllerPitchInput(Value);
 }
 
-void AHeroCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
+#pragma endregion 
 
+
+void AHeroCharacter::SetOverlappingWeapon(ABaseWeapon* Weapon)
+{
+	if(OverlappingWeapon)
+	{
+		OverlappingWeapon->ShowPickupWidget(false);// Hide old widget if we had one
+	}
+	OverlappingWeapon = Weapon;// Set the new weapon
+	if (IsLocallyControlled())// Only on the local player
+	{
+		if(OverlappingWeapon)
+		{
+			OverlappingWeapon->ShowPickupWidget(true);// Show the new weapon's widget
+		}
+	}
 }
+
+void AHeroCharacter::OnRep_OverlappingWeapon(ABaseWeapon* LastWeapon)
+{
+	if(OverlappingWeapon)
+	{
+		OverlappingWeapon->ShowPickupWidget(true);
+	}
+	if(LastWeapon)
+	{
+		LastWeapon->ShowPickupWidget(false);
+	}
+}
+
+
+
+
 
 
 
