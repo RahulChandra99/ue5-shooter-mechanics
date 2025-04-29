@@ -26,6 +26,9 @@ protected:
 	UFUNCTION(Server,Reliable)
 	void ServerSetAiming(bool bIsAiming);
 
+	UFUNCTION()
+	void FireButtonPressed(bool bPressed);
+
 private:
 
 	UPROPERTY()
@@ -36,6 +39,9 @@ private:
 
 	UPROPERTY(Replicated)
 	bool bAiming;
+
+	UPROPERTY()
+	bool bFireButtonPressed;
 
 		
 };

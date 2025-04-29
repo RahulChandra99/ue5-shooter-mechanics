@@ -58,6 +58,8 @@ void AHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAction("Equip",IE_Pressed,this,&AHeroCharacter::EquipButtonPressed);
 	PlayerInputComponent->BindAction("Aim",IE_Pressed,this,&AHeroCharacter::AimButtonPressed);
 	PlayerInputComponent->BindAction("Aim",IE_Released,this,&AHeroCharacter::AimButtonReleased);
+	PlayerInputComponent->BindAction("Fire",IE_Pressed,this,&AHeroCharacter::FireButtonPressed);
+	PlayerInputComponent->BindAction("Fire",IE_Released,this,&AHeroCharacter::FireButtonReleased);
 }
 
 void AHeroCharacter::PostInitializeComponents()
@@ -67,6 +69,20 @@ void AHeroCharacter::PostInitializeComponents()
 	if(Combat)
 	{
 		Combat->HeroCharacter = this;
+	}
+}
+
+void AHeroCharacter::PlayFireMontage(bool bAiming)
+{
+	if(Combat == nullptr || Combat->EquippedWeapon == nullptr) return;
+
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && FireWeaponMontage)
+	{
+		AnimInstance->Montage_Play(FireWeaponMontage);
+		FName SectionName;
+		SectionName = bAiming ? FName("RifleAim") : FName("RifleHip");
+		AnimInstance->Montage_JumpToSection(SectionName);
 	}
 }
 
@@ -207,6 +223,22 @@ void AHeroCharacter::AimButtonReleased()
 	if(Combat)
 	{
 		Combat->SetAiming(false);
+	}
+}
+
+void AHeroCharacter::FireButtonPressed()
+{
+	if(Combat)
+	{
+		Combat->FireButtonPressed(true);
+	}
+}
+
+void AHeroCharacter::FireButtonReleased()
+{
+	if(Combat)
+	{
+		Combat->FireButtonPressed(false);
 	}
 }
 

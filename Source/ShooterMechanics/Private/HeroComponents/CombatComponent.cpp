@@ -60,7 +60,18 @@ void UCombatComponent::SetAiming(bool bIsAiming)
 	ServerSetAiming(bIsAiming);	//Ask server to set	; Server needs to know the truth
 }
 
+
+
 void UCombatComponent::ServerSetAiming_Implementation(bool bIsAiming)
 {
 	bAiming = bIsAiming;
+}
+
+void UCombatComponent::FireButtonPressed(bool bPressed)
+{
+	bFireButtonPressed = bPressed;
+	if(HeroCharacter && bFireButtonPressed)
+	{
+		HeroCharacter->PlayFireMontage(bAiming);
+	}
 }
