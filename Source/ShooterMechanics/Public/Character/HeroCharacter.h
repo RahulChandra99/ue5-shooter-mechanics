@@ -47,10 +47,13 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	UCombatComponent* Combat;
 
+	UFUNCTION(Server, Reliable)
+	void ServerEquipButtonPressed();
 
 public:
 
 	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom;}
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera;}
 	void SetOverlappingWeapon(ABaseWeapon* Weapon);
+	bool IsWeaponEquipped();
 };

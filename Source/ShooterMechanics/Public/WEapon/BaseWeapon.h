@@ -26,6 +26,7 @@ class SHOOTERMECHANICS_API ABaseWeapon : public AActor
 public:	
 	ABaseWeapon();
 	virtual void Tick(float DeltaTime) override;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	void ShowPickupWidget(bool bShowWidget);
 protected:
 	virtual void BeginPlay() override;
@@ -54,16 +55,23 @@ private:
 	UPROPERTY(VisibleAnywhere, Category="Weapon Properties")
 	USphereComponent* AreaSphere;
 
-	UPROPERTY(VisibleAnywhere, Category="Weapon Properties")
+	UPROPERTY(ReplicatedUsing = OnRep_WeaponState, VisibleAnywhere, Category="Weapon Properties")
 	EWeaponState WeaponState;
+
+	UFUNCTION()
+	void OnRep_WeaponState();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Weapon Properties", meta=(AllowPrivateAccess="true"))
 	UWidgetComponent* PickupWidget;
 
 public:
 
-	FORCEINLINE void SetWeaponState(const EWeaponState State) { WeaponState = State;}
+	void SetWeaponState(const EWeaponState State);
+	FORCEINLINE USphereComponent* GetAreaSphere() const { return AreaSphere;}
 };
+
+
+
 
 
 

@@ -4,7 +4,9 @@
 #include "HeroComponents/CombatComponent.h"
 
 #include "Character/HeroCharacter.h"
+#include "Components/SphereComponent.h"
 #include "Engine/SkeletalMeshSocket.h"
+#include "Net/UnrealNetwork.h"
 #include "WEapon/BaseWeapon.h"
 
 UCombatComponent::UCombatComponent()
@@ -17,8 +19,6 @@ UCombatComponent::UCombatComponent()
 void UCombatComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	
 }
 
 
@@ -28,18 +28,26 @@ void UCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 }
 
+void UCombatComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(UCombatComponent,EquippedWeapon);
+}
+
 void UCombatComponent::EquipWeapon(ABaseWeapon* WeaponToEquip)
 {
 	if(HeroCharacter == nullptr || WeaponToEquip == nullptr) return;
 
 	EquippedWeapon = WeaponToEquip;
 	EquippedWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
+	
 	const USkeletalMeshSocket* HandSocket = HeroCharacter->GetMesh()->GetSocketByName(FName("RightHandSocket"));
 	if(HandSocket)
 	{
 		HandSocket->AttachActor(EquippedWeapon, HeroCharacter->GetMesh());
 	}
 	EquippedWeapon->SetOwner(HeroCharacter);
-	EquippedWeapon->ShowPickupWidget(false);
+	
 }
 

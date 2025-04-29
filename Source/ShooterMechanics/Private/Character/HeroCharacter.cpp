@@ -27,17 +27,9 @@ AHeroCharacter::AHeroCharacter()
 
 	Combat = CreateDefaultSubobject<UCombatComponent>(TEXT("CombatComponent"));
 	Combat->SetIsReplicated(true);
-	
+
+	GetCharacterMovement()->NavAgentProps.bCanCrouch = true;
 }
-
-void AHeroCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
-{
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	DOREPLIFETIME_CONDITION(AHeroCharacter, OverlappingWeapon, COND_OwnerOnly)
-}
-
-
 
 
 void AHeroCharacter::BeginPlay()
@@ -76,6 +68,14 @@ void AHeroCharacter::PostInitializeComponents()
 	}
 }
 
+void AHeroCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME_CONDITION(AHeroCharacter, OverlappingWeapon, COND_OwnerOnly)
+}
+
+
 #pragma region LocomotionLogic
 
 void AHeroCharacter::MoveForward(float Value)
@@ -112,18 +112,18 @@ void AHeroCharacter::LookUp(float Value)
 
 void AHeroCharacter::CrouchButtonPressed()
 {
-	Crouch();
+	if(bIsCrouched)
+	{
+		UnCrouch();
+	}
+	else
+	{
+		Crouch();	
+	}
+	
 }
 
 #pragma endregion
-
-void AHeroCharacter::EquipButtonPressed()
-{
-	if(Combat && HasAuthority())
-	{
-		Combat->EquipWeapon(OverlappingWeapon);
-	}
-}
 
 
 void AHeroCharacter::SetOverlappingWeapon(ABaseWeapon* Weapon)
@@ -142,6 +142,7 @@ void AHeroCharacter::SetOverlappingWeapon(ABaseWeapon* Weapon)
 	}
 }
 
+
 void AHeroCharacter::OnRep_OverlappingWeapon(ABaseWeapon* LastWeapon)
 {
 	if(OverlappingWeapon)
@@ -152,6 +153,36 @@ void AHeroCharacter::OnRep_OverlappingWeapon(ABaseWeapon* LastWeapon)
 	{
 		LastWeapon->ShowPickupWidget(false);
 	}
+}
+
+void AHeroCharacter::EquipButtonPressed()
+{
+	if(Combat)
+	{
+		if(HasAuthority())
+		{
+			Combat->EquipWeapon(OverlappingWeapon); //for server
+		}
+		else
+		{
+			ServerEquipButtonPressed(); // for clients
+		}
+	}
+}
+
+void AHeroCharacter::ServerEquipButtonPressed_Implementation()
+{
+	if(Combat)
+	{
+		Combat->EquipWeapon(OverlappingWeapon);
+	}
+	
+}
+
+
+bool AHeroCharacter::IsWeaponEquipped()
+{
+	return (Combat && Combat->EquippedWeapon);
 }
 
 
