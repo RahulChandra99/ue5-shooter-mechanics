@@ -27,6 +27,9 @@ protected:
 	void ServerSetAiming(bool bIsAiming);
 
 	UFUNCTION()
+	void OnRep_EquippedWeapon();
+
+	UFUNCTION()
 	void FireButtonPressed(bool bPressed);
 
 private:
@@ -34,7 +37,7 @@ private:
 	UPROPERTY()
 	AHeroCharacter* HeroCharacter;
 	
-	UPROPERTY(Replicated)
+	UPROPERTY(ReplicatedUsing = OnRep_EquippedWeapon)
 	class ABaseWeapon* EquippedWeapon;
 
 	UPROPERTY(Replicated)

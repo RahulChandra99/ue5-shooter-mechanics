@@ -92,6 +92,8 @@ void ABaseWeapon::ShowPickupWidget(bool bShowWidget)
 	}
 }
 
+
+
 void ABaseWeapon::SetWeaponState(const EWeaponState State)
 {
 	WeaponState = State;
@@ -118,7 +120,13 @@ void ABaseWeapon::OnRep_WeaponState()
 	}
 }
 
-
+void ABaseWeapon::Fire()
+{
+	if(FireAnimation)
+	{
+		WeaponMesh->PlayAnimation(FireAnimation, false);
+	}
+}
 
 
 
