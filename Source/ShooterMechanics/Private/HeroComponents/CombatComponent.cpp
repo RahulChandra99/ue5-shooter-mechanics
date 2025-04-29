@@ -56,8 +56,8 @@ void UCombatComponent::EquipWeapon(ABaseWeapon* WeaponToEquip)
 
 void UCombatComponent::SetAiming(bool bIsAiming)
 {
-	bAiming = bIsAiming;
-	ServerSetAiming(bIsAiming);
+	bAiming = bIsAiming;	//Set locally first; Fast feedback, no input lag
+	ServerSetAiming(bIsAiming);	//Ask server to set	; Server needs to know the truth
 }
 
 void UCombatComponent::ServerSetAiming_Implementation(bool bIsAiming)
