@@ -59,6 +59,10 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Weapon Properties", meta=(AllowPrivateAccess="true"))
 	UWidgetComponent* PickupWidget;
+
+public:
+
+	FORCEINLINE void SetWeaponState(const EWeaponState State) { WeaponState = State;}
 };
 
 

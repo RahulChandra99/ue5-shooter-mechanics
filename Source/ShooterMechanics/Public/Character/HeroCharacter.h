@@ -5,6 +5,7 @@
 #include "GameFramework/Character.h"
 #include "HeroCharacter.generated.h"
 
+class UCombatComponent;
 class UCameraComponent;
 class USpringArmComponent;
 
@@ -18,6 +19,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	virtual void PostInitializeComponents() override;
 protected:
 	virtual void BeginPlay() override;
 
@@ -25,7 +27,9 @@ protected:
 	void MoveRight(float Value);
 	void Turn(float Value);
 	void LookUp(float Value);
+	void CrouchButtonPressed();
 
+	void EquipButtonPressed();
 private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Camera", meta = (AllowPrivateAccess = true))
@@ -39,6 +43,9 @@ private:
 
 	UFUNCTION()
 	void OnRep_OverlappingWeapon(ABaseWeapon* LastWeapon);
+
+	UPROPERTY(VisibleAnywhere)
+	UCombatComponent* Combat;
 
 
 public:

@@ -5,6 +5,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "HeroComponents/CombatComponent.h"
 #include "Net/UnrealNetwork.h"
 #include "WEapon/BaseWeapon.h"
 
@@ -23,6 +24,9 @@ AHeroCharacter::AHeroCharacter()
 
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
+
+	Combat = CreateDefaultSubobject<UCombatComponent>(TEXT("CombatComponent"));
+	Combat->SetIsReplicated(true);
 	
 }
 
@@ -32,6 +36,8 @@ void AHeroCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 
 	DOREPLIFETIME_CONDITION(AHeroCharacter, OverlappingWeapon, COND_OwnerOnly)
 }
+
+
 
 
 void AHeroCharacter::BeginPlay()
@@ -56,6 +62,18 @@ void AHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis("LookUp",this,&AHeroCharacter::LookUp);
 
 	PlayerInputComponent->BindAction("Jump",IE_Pressed,this,&ACharacter::Jump);
+	PlayerInputComponent->BindAction("Crouch",IE_Pressed,this,&AHeroCharacter::CrouchButtonPressed);
+	PlayerInputComponent->BindAction("Equip",IE_Pressed,this,&AHeroCharacter::EquipButtonPressed);
+}
+
+void AHeroCharacter::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	if(Combat)
+	{
+		Combat->HeroCharacter = this;
+	}
 }
 
 #pragma region LocomotionLogic
@@ -92,7 +110,20 @@ void AHeroCharacter::LookUp(float Value)
 	AddControllerPitchInput(Value);
 }
 
-#pragma endregion 
+void AHeroCharacter::CrouchButtonPressed()
+{
+	Crouch();
+}
+
+#pragma endregion
+
+void AHeroCharacter::EquipButtonPressed()
+{
+	if(Combat && HasAuthority())
+	{
+		Combat->EquipWeapon(OverlappingWeapon);
+	}
+}
 
 
 void AHeroCharacter::SetOverlappingWeapon(ABaseWeapon* Weapon)
