@@ -52,5 +52,7 @@ private:
 	FRotator CharacterRotationLastFrame;
 	FRotator CharacterRotation;
 	FRotator DeltaRotation;
+
+	void LeanStrafeCalculation(float DeltaSeconds);
 	
 };

@@ -14,16 +14,21 @@ UCombatComponent::UCombatComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 
+	BaseWalkSpeed = 600.f;
+	BaseAimWalkSpeed = 450.f;
+
 }
 
 
 void UCombatComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if(HeroCharacter)
+	{
+		HeroCharacter->GetCharacterMovement()->MaxWalkSpeed = BaseWalkSpeed;
+	}
 }
-
-
-
 
 void UCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -70,6 +75,11 @@ void UCombatComponent::SetAiming(bool bIsAiming)
 {
 	bAiming = bIsAiming;	//Set locally first; Fast feedback, no input lag
 	ServerSetAiming(bIsAiming);	//Ask server to set	; Server needs to know the truth
+
+	if(HeroCharacter)
+	{
+		HeroCharacter->GetCharacterMovement()->MaxWalkSpeed = bIsAiming ? BaseAimWalkSpeed : BaseWalkSpeed;
+	}
 }
 
 
@@ -77,6 +87,11 @@ void UCombatComponent::SetAiming(bool bIsAiming)
 void UCombatComponent::ServerSetAiming_Implementation(bool bIsAiming)
 {
 	bAiming = bIsAiming;
+
+	if(HeroCharacter)
+	{
+		HeroCharacter->GetCharacterMovement()->MaxWalkSpeed = bIsAiming ? BaseAimWalkSpeed : BaseWalkSpeed;
+	}
 }
 
 
@@ -84,11 +99,26 @@ void UCombatComponent::ServerSetAiming_Implementation(bool bIsAiming)
 void UCombatComponent::FireButtonPressed(bool bPressed)
 {
 	bFireButtonPressed = bPressed;
+
+	if(bFireButtonPressed)
+		ServerFire();
+	
+}
+
+void UCombatComponent::ServerFire_Implementation()
+{
+	MultiCastFire();
+}
+
+
+void UCombatComponent::MultiCastFire_Implementation()
+{
 	if(EquippedWeapon == nullptr) return;
 	
-	if(HeroCharacter && bFireButtonPressed)
+	if(HeroCharacter)
 	{
 		HeroCharacter->PlayFireMontage(bAiming);
 		EquippedWeapon->Fire();
 	}
 }
+
