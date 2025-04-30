@@ -32,6 +32,15 @@ protected:
 	UFUNCTION()
 	void FireButtonPressed(bool bPressed);
 
+	UFUNCTION(Server, Reliable)
+	void ServerFire();
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MultiCastFire();
+
+	UFUNCTION()
+	void TraceUnderCrosshairs(FHitResult& TraceHitResult);
+
 private:
 
 	UPROPERTY()
@@ -45,16 +54,12 @@ private:
 
 	UPROPERTY()
 	bool bFireButtonPressed;
-
-	UFUNCTION(Server, Reliable)
-	void ServerFire();
-
-	UFUNCTION(NetMulticast, Reliable)
-	void MultiCastFire();
-
+	
 	UPROPERTY(EditAnywhere, Category="Movement")
 	float BaseWalkSpeed;
 
 	UPROPERTY(EditAnywhere, Category="Movement")
 	float BaseAimWalkSpeed;
+
+	FVector HitTarget;
 };

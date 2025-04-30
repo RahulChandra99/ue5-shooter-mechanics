@@ -54,5 +54,11 @@ private:
 	FRotator DeltaRotation;
 
 	void LeanStrafeCalculation(float DeltaSeconds);
+
+	UPROPERTY(BlueprintReadOnly, Category="Movement", meta=(AllowPrivateAccess = true))
+	float AO_Yaw;
+
+	UPROPERTY(BlueprintReadOnly, Category="Movement", meta=(AllowPrivateAccess = true))
+	float AO_Pitch;
 	
 };

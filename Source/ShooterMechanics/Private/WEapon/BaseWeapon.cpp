@@ -120,7 +120,7 @@ void ABaseWeapon::OnRep_WeaponState()
 	}
 }
 
-void ABaseWeapon::Fire()
+void ABaseWeapon::Fire(const FVector& HitTarget)
 {
 	if(FireAnimation)
 	{

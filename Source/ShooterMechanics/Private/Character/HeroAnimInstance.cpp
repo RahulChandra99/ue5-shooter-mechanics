@@ -38,6 +38,9 @@ void UHeroAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 	LeanStrafeCalculation(DeltaSeconds);
 
+	AO_Yaw = HeroCharacterRef->GetAOYaw();
+	AO_Pitch = HeroCharacterRef->GetAOPitch();
+
 }
 
 void UHeroAnimInstance::LeanStrafeCalculation(float DeltaSeconds)

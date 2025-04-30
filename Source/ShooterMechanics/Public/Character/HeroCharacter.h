@@ -35,6 +35,7 @@ protected:
 	void AimButtonReleased();
 	void FireButtonPressed();
 	void FireButtonReleased();
+	void AimOffset(float DeltaTime);
 private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Camera", meta = (AllowPrivateAccess = true))
@@ -58,6 +59,10 @@ private:
 	UPROPERTY(EditAnywhere, Category="Combat")
 	class UAnimMontage* FireWeaponMontage;
 
+	float AO_Yaw;
+	float AO_Pitch;
+	FRotator StartingAimRotation;
+
 public:
 
 	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom;}
@@ -65,4 +70,7 @@ public:
 	void SetOverlappingWeapon(ABaseWeapon* Weapon);
 	bool IsWeaponEquipped();
 	bool IsAiming();
+	FORCEINLINE float GetAOYaw() const { return AO_Yaw;}
+	FORCEINLINE float GetAOPitch() const { return AO_Pitch;}
+
 };
