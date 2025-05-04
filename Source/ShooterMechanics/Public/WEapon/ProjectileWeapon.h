@@ -19,6 +19,8 @@ private:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AProjectile> ProjectileClass;
 
+	
+
 public:
 	virtual void Fire(const FVector& HitTarget) override;
 	
